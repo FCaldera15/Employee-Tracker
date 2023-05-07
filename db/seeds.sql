@@ -26,7 +26,8 @@ VALUES ("Micheal", "Hicks", 1, NULL),
 ("Marcos", "Amaro", 5, 4),
 ("Bryan", "Aguilar", 6, 4),
 ("Scott", "Pilgrim", 7, NULL),
-("Kevin", "Cabrerra", 8, 7),
-("Juan", "Salinas", 9, NULL),
-("Justin", "Rayburn", 10, 9),
-("Carlos", "Moncada", 11, 9);
+("Jerome", "Pickens", 8, 7),
+("Kevin", "Cabrerra", 9, 7),
+("Juan", "Salinas", 10, NULL),
+("Justin", "Rayburn", 11, 10),
+("Carlos", "Moncada", 12, 10);
