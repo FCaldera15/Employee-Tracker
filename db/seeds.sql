@@ -1,3 +1,4 @@
+-- Inserting values into the tables --
 INSERT INTO department (name)
 VALUES ("Front End"),
 ("Shipping"),

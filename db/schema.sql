@@ -1,8 +1,11 @@
+-- Drop and Create new database --
 DROP DATABASE IF EXISTS company_db;
 CREATE DATABASE company_db;
 
+-- Makes it so all of the following code will affect company_db --
 USE company_db;
 
+-- Created tables "department, role, and employee" within company_db --
 CREATE TABLE department (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL
