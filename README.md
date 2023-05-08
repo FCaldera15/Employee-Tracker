@@ -12,26 +12,24 @@
 </ul>
 
 # Description
-This repository was made to help students like myself implement Express.js and npm moduels into a project. It will further our knowledge into the backend and start connecting it into the frontend as well.
+This repository was made to help students like myself implement mysql and inquirer to JavaScipt, and also to be able to use the command line to interact with a MYSQL DataBase.
 
 # Installation
 Node.js <br />
-Express.js<br />
-npm modules<br />
+Inquirer<br />
+MySQL<br />
 
 # Usage
-This application enables users to create, save or delete notes. 
+This repository is used to be able to view and manage the departments, roles, and employees in a company so that they can organize and plan a business
 
 # License
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
+ 
 # Contributing
 N/A
 
 # Tests
-Link is [here]() <br />
-
-![alt text]()
+Link is [here](https://drive.google.com/file/d/1SLH_h4GQnLhAJiTaJkbZeeOfeTGfdKnw/view) <br />
 
 
 # Questions
