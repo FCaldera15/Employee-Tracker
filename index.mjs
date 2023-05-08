@@ -32,7 +32,10 @@ const main = () => {
                 "Add A Department",
                 "Add A Role",
                 "Add Employee",
-                "Update Employee Role"
+                "Update Employee Role",
+                "Update Employee Manager",
+                "View Employees By Manager",
+                "View Employees By Department"
             ],
         })
         .then((answer) => {
@@ -64,6 +67,18 @@ const main = () => {
 
                 case "Update Employee Role":
                     updateEmployee();
+                    break;
+
+                case "Update Employee Manager":
+                    updateManager();
+                    break;
+
+                case "View Employees By Manager":
+                    viewEmployeeByManager();
+                    break;
+
+                case "View Employees By Department":
+                    viewEmployeeByDepartment();
                     break;
             }
         });
@@ -212,5 +227,78 @@ async function updateEmployee() {
     main()
 };
 
+// Function on changing the employess's manager
+async function updateManager() {
+    const [employeeArr] = await promisePool.query("SELECT id, CONCAT(first_name, ' ', last_name) AS employee_name FROM employee")
+    const employees = employeeArr.map(row => ({ name: row.employee_name, value: row.id }));
+
+    let { employeeName, managerName } = await inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "employeeName",
+                message: "Which employee's manager would you want to update?",
+                choices: [...employees]
+            },
+            {
+                type: "list",
+                name: "managerName",
+                message: "Which employee is the manager for the selected employee",
+                choices: [...employees]
+            },
+        ]);
+
+    const [rows] = await promisePool.query("UPDATE employee SET manager_id = ? WHERE id = ?", [managerName, employeeName]);
+    console.log("Updated employee's manager");
+    main()
+};
+
+// Function on viewing the rows of the employees that work under the selected manager
+async function viewEmployeeByManager() {
+    const [employeeArr] = await promisePool.query("SELECT id, CONCAT(first_name, ' ', last_name) AS employee_name FROM employee")
+    const employees = employeeArr.map(row => ({ name: row.employee_name, value: row.id }));
+
+    let { managerID } = await inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "managerID",
+                message: "Which employee would you like to see direct reports for?",
+                choices: [...employees]
+            }
+        ]);
+
+    const [rows] = await promisePool.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id WHERE manager_id = ?", managerID);
+    if (rows.length === 0) {
+        console.log("Selected employee is not a manager")
+    } else {
+        console.table(rows)
+    };
+
+    return main();
+};
+
+// Function on viewing the rows of the employees that work under the selected department
+async function viewEmployeeByDepartment() {
+
+    const [selectDept] = await promisePool.query("SELECT id, name FROM department");
+    const departments = selectDept.map(row => ({ name: row.name, value: row.id }));
+
+
+    let { departmentID } = await inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "departmentID",
+                message: "Which department would you like to see the employees for?",
+                choices: [...departments]
+            }
+        ]);
+
+    const [rows] = await promisePool.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id WHERE department.id = ?", departmentID);
+    console.table(rows)
+
+    return main();
+};
 
 main();
